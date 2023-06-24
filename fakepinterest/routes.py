@@ -40,6 +40,7 @@ def perfil(id_usuario):
             nome_seguro = secure_filename(arquivo.filename)
             caminho = os.path.join(os.path.abspath(os.path.dirname(__file__)), app.config["UPLOAD_FOLDER"], nome_seguro)
             arquivo.save(caminho)
+            #criar a foto no banco com o item "imagem" sendo o nome do arquivo
             foto = Foto(imagem=nome_seguro, id_usuario=current_user.id)
             database.session.add(foto)
             database.session.commit()
@@ -53,3 +54,9 @@ def perfil(id_usuario):
 def logout():
     logout_user()
     return redirect(url_for("homepage"))
+
+@app.route("/feed")
+@login_required
+def feed():
+    fotos = Foto.query.order_by(Foto.data_criacao.desc()).all()
+    return render_template("feed.html", fotos=fotos)
