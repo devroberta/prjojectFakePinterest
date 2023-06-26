@@ -20,7 +20,7 @@
                     Escolher arquivo
                     {{ form.foto(class="input-arquivo", id="foto") }}
                 </label>
-                <p id="imagem-arquivo" class=""></p>
+                <span id="imagem-arquivo" class=""></span>
                 {{ form.botao_confirmacao(class="botao-login") }}
               </div>
           </form>
@@ -41,6 +41,8 @@
         let imagemArquivo = document.getElementById("imagem-arquivo");
 
         input.addEventListener("change", () => {
+            let inputImagem = input.files[0];
+
             imagemArquivo.classList.add("visivel");
             imagemArquivo.innerText = inputImagem.name;
          });
